@@ -24,6 +24,25 @@
 						"type": "uint256"
 					}
 				],
+				"name": "employerIdToAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
 				"name": "employerProfiles",
 				"outputs": [
 					{
@@ -44,6 +63,25 @@
 					{
 						"internalType": "address",
 						"name": "wallet",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "freelancerIdToAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
 						"type": "address"
 					}
 				],
@@ -278,11 +316,11 @@
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0xd3d54000fa1aaa4f6a347aa11c260fb2fcc5b7f243bd8a82b97e26b4f792ee2e",
+			"keccak256": "0x429ad6a8893137d428f640867e4778d075742c2407f79a39e0ad6d1c3696f54a",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://5037266c20ffa81801ff5860a379c9798ce4f869b8d8dc30e6e1fa6c0dcc3886",
-				"dweb:/ipfs/QmWxY1V8QnioVs5coC4bQkuvyEfinJZ3vKSNjKMmEAdgt6"
+				"bzz-raw://7850f58602c9897908173e3840ef321c0254f8087eee1c32acd975b8e9cbcabc",
+				"dweb:/ipfs/QmaU3YSZyAw3u42qHmGje41mJzMxbdgvSSXe5mN8nChWRM"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {

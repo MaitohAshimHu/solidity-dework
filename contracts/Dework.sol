@@ -11,6 +11,8 @@ contract Dework{
     FreelancerProfile[] public freelancerProfiles;
     EmployerProfile[] public employerProfiles;
 
+    mapping(uint256=>address) public freelancerIdToAddress;
+    mapping(uint256=>address) public employerIdToAddress;
 
     //solidity has no concept of null / none
 
@@ -42,6 +44,7 @@ contract Dework{
                    hourlyRateWei:hourlyRateWei
          });
          freelancerProfiles.push(freelancerProfile);
+         freelancerIdToAddress[freelancerId] =msg.sender;
     }
 
     function registerEmployerProfile(
@@ -55,6 +58,7 @@ contract Dework{
                 wallet:msg.sender
         });
         employerProfiles.push(employerProfile);
+        employerIdToAddress[employerId] =msg.sender;
     }
 
      function getFreelancerProfile() public view returns(FreelancerProfile[] memory){
