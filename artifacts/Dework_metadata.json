@@ -20,6 +20,100 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "fixedPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pricePaid",
+						"type": "uint256"
+					}
+				],
+				"name": "Dework_IncorrectJobCreationFee",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "EmployerProfileRegistered",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "freelancerId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "FreelancerProfileRegistered",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "title",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "jobDescription",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "deadline",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fixedPriceInWei",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct CreateJobListingInput",
+						"name": "jobListingInput",
+						"type": "tuple"
+					}
+				],
+				"name": "createJobListing",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
 					}
@@ -316,19 +410,19 @@
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0x429ad6a8893137d428f640867e4778d075742c2407f79a39e0ad6d1c3696f54a",
+			"keccak256": "0x2fb3787eca1588af0b0d5c2ff1eeeddb34e09ce01868ad6f84c1d8866ebfb173",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://7850f58602c9897908173e3840ef321c0254f8087eee1c32acd975b8e9cbcabc",
-				"dweb:/ipfs/QmaU3YSZyAw3u42qHmGje41mJzMxbdgvSSXe5mN8nChWRM"
+				"bzz-raw://20676027adbf1b0025db82e11335b819abbf9b552b78081b3199a53ce5c23f4f",
+				"dweb:/ipfs/QmbkArHcHmwor1EgxmDYz1S8abmUhxDjbBW3Z9WUCsvbNA"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {
-			"keccak256": "0x145685d2103fc10ece08f8208e04aa71abc8a04ecc637b878a046fa8a7f398ce",
+			"keccak256": "0x06fc716ce4c3fe3ed720ecd71928294f82beef29ad261414e4849f5388690da6",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://eb1f1afcc488401583184dbb5ce6bfcc895312e8656bd780735c9d322b3559ad",
-				"dweb:/ipfs/QmVDg955rmivHYH5XLxwQUpc1KktkydifzcHnR5rbRweEG"
+				"bzz-raw://10c6a8cf579edbf5d7049136c7dfa5aac5bbdbc73befdc8107358eb4614d4c1b",
+				"dweb:/ipfs/QmXcH3WQYsWu2LHEdJTAvowWnr419TWLKKRE6Z2npzk6Cg"
 			]
 		}
 	},

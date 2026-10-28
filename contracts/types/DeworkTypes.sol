@@ -16,3 +16,11 @@ struct EmployerProfile{
     bool isHiring;
     address wallet;
 }
+
+struct CreateJobListingInput{
+    string title;
+    string jobDescription;
+    uint256 deadline;
+    uint256 fixedPriceInWei;
+}
+

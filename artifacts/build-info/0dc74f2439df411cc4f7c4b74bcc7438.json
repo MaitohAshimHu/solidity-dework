@@ -1,5 +1,5 @@
 {
-	"id": "e193f4cf92313e50c33d93997ebf708c",
+	"id": "0dc74f2439df411cc4f7c4b74bcc7438",
 	"_format": "hh-sol-build-info-1",
 	"solcVersion": "0.8.34",
 	"solcLongVersion": "0.8.34+commit.80d5c536",
@@ -7,7 +7,7 @@
 		"language": "Solidity",
 		"sources": {
 			"contracts/types/DeworkTypes.sol": {
-				"content": "// SPDX-License-Identifier: GPL-3.0\npragma solidity >=0.8.2 <0.9.0;\n\nstruct FreelancerProfile{\n    uint256 id;\n    string name;\n    address wallet;\n    uint8 experienceYears;\n    bool isAvailableHire;\n    uint256 hourlyRateWei; // 1 ether = 10^18 wei\n}\n\nstruct EmployerProfile{\n    uint256 id;\n    string name;\n    bool isHiring;\n    address wallet;\n}"
+				"content": "// SPDX-License-Identifier: GPL-3.0\npragma solidity >=0.8.2 <0.9.0;\n\nstruct FreelancerProfile{\n    uint256 id;\n    string name;\n    address wallet;\n    uint8 experienceYears;\n    bool isAvailableHire;\n    uint256 hourlyRateWei; // 1 ether = 10^18 wei\n}\n\nstruct EmployerProfile{\n    uint256 id;\n    string name;\n    bool isHiring;\n    address wallet;\n}\n\nstruct CreateJobListingInput{\n    string title;\n    string jobDescription;\n    uint256 deadline;\n    uint256 fixedPriceInWei;\n}\n\n"
 			}
 		},
 		"settings": {
@@ -44,6 +44,9 @@
 				"ast": {
 					"absolutePath": "contracts/types/DeworkTypes.sol",
 					"exportedSymbols": {
+						"CreateJobListingInput": [
+							32
+						],
 						"EmployerProfile": [
 							23
 						],
@@ -51,7 +54,7 @@
 							14
 						]
 					},
-					"id": 24,
+					"id": 33,
 					"license": "GPL-3.0",
 					"nodeType": "SourceUnit",
 					"nodes": [
@@ -240,7 +243,7 @@
 							"name": "FreelancerProfile",
 							"nameLocation": "76:17:0",
 							"nodeType": "StructDefinition",
-							"scope": 24,
+							"scope": 33,
 							"src": "69:183:0",
 							"visibility": "public"
 						},
@@ -361,12 +364,132 @@
 							"name": "EmployerProfile",
 							"nameLocation": "261:15:0",
 							"nodeType": "StructDefinition",
-							"scope": 24,
+							"scope": 33,
 							"src": "254:97:0",
+							"visibility": "public"
+						},
+						{
+							"canonicalName": "CreateJobListingInput",
+							"id": 32,
+							"members": [
+								{
+									"constant": false,
+									"id": 25,
+									"mutability": "mutable",
+									"name": "title",
+									"nameLocation": "394:5:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 32,
+									"src": "387:12:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_string_storage_ptr",
+										"typeString": "string"
+									},
+									"typeName": {
+										"id": 24,
+										"name": "string",
+										"nodeType": "ElementaryTypeName",
+										"src": "387:6:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_string_storage_ptr",
+											"typeString": "string"
+										}
+									},
+									"visibility": "internal"
+								},
+								{
+									"constant": false,
+									"id": 27,
+									"mutability": "mutable",
+									"name": "jobDescription",
+									"nameLocation": "412:14:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 32,
+									"src": "405:21:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_string_storage_ptr",
+										"typeString": "string"
+									},
+									"typeName": {
+										"id": 26,
+										"name": "string",
+										"nodeType": "ElementaryTypeName",
+										"src": "405:6:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_string_storage_ptr",
+											"typeString": "string"
+										}
+									},
+									"visibility": "internal"
+								},
+								{
+									"constant": false,
+									"id": 29,
+									"mutability": "mutable",
+									"name": "deadline",
+									"nameLocation": "440:8:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 32,
+									"src": "432:16:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_uint256",
+										"typeString": "uint256"
+									},
+									"typeName": {
+										"id": 28,
+										"name": "uint256",
+										"nodeType": "ElementaryTypeName",
+										"src": "432:7:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_uint256",
+											"typeString": "uint256"
+										}
+									},
+									"visibility": "internal"
+								},
+								{
+									"constant": false,
+									"id": 31,
+									"mutability": "mutable",
+									"name": "fixedPriceInWei",
+									"nameLocation": "462:15:0",
+									"nodeType": "VariableDeclaration",
+									"scope": 32,
+									"src": "454:23:0",
+									"stateVariable": false,
+									"storageLocation": "default",
+									"typeDescriptions": {
+										"typeIdentifier": "t_uint256",
+										"typeString": "uint256"
+									},
+									"typeName": {
+										"id": 30,
+										"name": "uint256",
+										"nodeType": "ElementaryTypeName",
+										"src": "454:7:0",
+										"typeDescriptions": {
+											"typeIdentifier": "t_uint256",
+											"typeString": "uint256"
+										}
+									},
+									"visibility": "internal"
+								}
+							],
+							"name": "CreateJobListingInput",
+							"nameLocation": "360:21:0",
+							"nodeType": "StructDefinition",
+							"scope": 33,
+							"src": "353:127:0",
 							"visibility": "public"
 						}
 					],
-					"src": "36:315:0"
+					"src": "36:446:0"
 				},
 				"id": 0
 			}
