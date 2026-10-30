@@ -4,6 +4,7 @@ pragma solidity >=0.8.2 <0.9.0;
 import{FreelancerProfile} from "./types/DeworkTypes.sol";
 import{EmployerProfile} from "./types/DeworkTypes.sol";
 import{CreateJobListingInput} from "./types/DeworkTypes.sol";
+import{JobListing} from "./types/DeworkTypes.sol";
 
 contract Dework{
     uint256 connectFee;   //state variable  by default = 0
@@ -21,6 +22,7 @@ contract Dework{
     event EmployerProfileRegistered(uint256 employerId,address caller);   
 
     error Dework_IncorrectJobCreationFee(uint256 fixedPrice,uint256 pricePaid); 
+    error Dework_JobClosed(uint256 jobId);
 
     constructor(address _initialOwner){
         initialOwner = _initialOwner;
@@ -63,13 +65,22 @@ contract Dework{
                 id:employerId,
                 name:employerName,
                 isHiring:true,
-                wallet:msg.sender
+                wallet:msg.sender,
+                jobListing: new JobListing[](0)
         });
         employerProfiles.push(employerProfile);
         employerIdToAddress[employerId] =msg.sender;
 
         emit EmployerProfileRegistered(employerId,msg.sender);
     }
+    
+    function getNumberOfCreatedJobList(uint256 employerId) public view returns(uint256){
+          return employerProfiles[employerId].jobListing.length;
+    }
+
+    function _getEmployerProfile(uint256 employerId) internal view returns(EmployerProfile storage){
+        return employerProfiles[employerId];
+    } 
 
     function createJobListing(
         uint256 employerId,
@@ -81,7 +92,25 @@ contract Dework{
                 revert Dework_IncorrectJobCreationFee(fixedPriceForJob,msg.value);
 
             }
-    }
+
+            EmployerProfile storage employerProfile = _getEmployerProfile(employerId);
+            uint256 jobId = getNumberOfCreatedJobList(employerId);
+
+        JobListing memory newJob = JobListing({
+            id:jobId,
+            title:jobListingInput.title,
+            description:jobListingInput.jobDescription,
+            deadlineTimestamp:jobListingInput.deadlineTimestamp,
+            isOpen:true,
+            fixedPriceInWei:jobListingInput.fixedPriceInWei,
+            hiredFreelancerId:0,
+            hasHiredFreelancer:false,
+            isPaid:false
+        });
+
+        employerProfile.jobListing.push(newJob);
+
+    }    
 
      function getFreelancerProfile() public view returns(FreelancerProfile[] memory){
                return freelancerProfiles;
@@ -92,12 +121,24 @@ contract Dework{
      }
 
 
-    //  function updateHourlyRate(uint256 _hourlyRate) public {
-    //    hourlyRate = _hourlyRate;
-    //  }
-    //  function getHourlyRate() public view returns(uint256) {
-    //     return hourlyRate;
-    //  }
+    function _getJob(uint256 employerId,uint256 jobId)internal view returns(JobListing storage){
+        return employerProfiles[employerId].jobListing[jobId];
+    }
+
+
+    function _requireJobIsOpen(uint256 employerId,uint256 jobId) internal view {
+        if (employerProfiles[employerId].jobListing[jobId].isOpen != true){
+            revert Dework_JobClosed(jobId);
+        }
+    }
+
+    
+    function hireFreelancer(uint256 employerId,uint256 freelancerId,uint256 jobId) public {
+          JobListing storage job = _getJob(employerId,jobId);
+          job.hiredFreelancerId = freelancerId;
+          job.hasHiredFreelancer = true;
+          job.isOpen = false;
+    }
 
 
 }

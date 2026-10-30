@@ -33,6 +33,17 @@
 				"type": "error"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobId",
+						"type": "uint256"
+					}
+				],
+				"name": "Dework_JobClosed",
+				"type": "error"
+			},
+			{
 				"anonymous": false,
 				"inputs": [
 					{
@@ -91,7 +102,7 @@
 							},
 							{
 								"internalType": "uint256",
-								"name": "deadline",
+								"name": "deadlineTimestamp",
 								"type": "uint256"
 							},
 							{
@@ -251,6 +262,58 @@
 								"internalType": "address",
 								"name": "wallet",
 								"type": "address"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint256",
+										"name": "id",
+										"type": "uint256"
+									},
+									{
+										"internalType": "string",
+										"name": "title",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "description",
+										"type": "string"
+									},
+									{
+										"internalType": "uint256",
+										"name": "deadlineTimestamp",
+										"type": "uint256"
+									},
+									{
+										"internalType": "bool",
+										"name": "isOpen",
+										"type": "bool"
+									},
+									{
+										"internalType": "uint256",
+										"name": "fixedPriceInWei",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "hiredFreelancerId",
+										"type": "uint256"
+									},
+									{
+										"internalType": "bool",
+										"name": "hasHiredFreelancer",
+										"type": "bool"
+									},
+									{
+										"internalType": "bool",
+										"name": "isPaid",
+										"type": "bool"
+									}
+								],
+								"internalType": "struct JobListing[]",
+								"name": "jobListing",
+								"type": "tuple[]"
 							}
 						],
 						"internalType": "struct EmployerProfile[]",
@@ -307,6 +370,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					}
+				],
+				"name": "getNumberOfCreatedJobList",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "getNumberOfRegisteredEmployers",
 				"outputs": [
@@ -330,6 +412,29 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "freelancerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "jobId",
+						"type": "uint256"
+					}
+				],
+				"name": "hireFreelancer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -403,26 +508,27 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
-		"remappings": []
+		"remappings": [],
+		"viaIR": true
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0x2fb3787eca1588af0b0d5c2ff1eeeddb34e09ce01868ad6f84c1d8866ebfb173",
+			"keccak256": "0x5d071db2ef44fa9930760794df2286b8804db731d429afef497fcaa0ef02e9fb",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://20676027adbf1b0025db82e11335b819abbf9b552b78081b3199a53ce5c23f4f",
-				"dweb:/ipfs/QmbkArHcHmwor1EgxmDYz1S8abmUhxDjbBW3Z9WUCsvbNA"
+				"bzz-raw://d5578116af15d95fecb12e10af4c49f09c3569fd520c014d0cbc3fbedec2467c",
+				"dweb:/ipfs/QmQkhWN1puAVUMpWrqwMLevm8wTXSyo4cvsG9XRoubFP4b"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {
-			"keccak256": "0x06fc716ce4c3fe3ed720ecd71928294f82beef29ad261414e4849f5388690da6",
+			"keccak256": "0xafe95ba86e635f298332520b4a9676e8f4250f0b2c893c8c15e8b2b899d6b669",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://10c6a8cf579edbf5d7049136c7dfa5aac5bbdbc73befdc8107358eb4614d4c1b",
-				"dweb:/ipfs/QmXcH3WQYsWu2LHEdJTAvowWnr419TWLKKRE6Z2npzk6Cg"
+				"bzz-raw://edab4a693e945d85b0b96219cf8e5115eea697936b3d354a837887c64f4ac092",
+				"dweb:/ipfs/QmeeUDMoM4RzosKshpqKAQcznQ6MosouW7pxdG8C4nGdyX"
 			]
 		}
 	},
