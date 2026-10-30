@@ -44,6 +44,38 @@
 				"type": "error"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "Dework_UnauthorizedEmployer",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "freelancerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "caller",
+						"type": "address"
+					}
+				],
+				"name": "Dework_UnauthorizedFreelancer",
+				"type": "error"
+			},
+			{
 				"anonymous": false,
 				"inputs": [
 					{
@@ -516,11 +548,11 @@
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0x5d071db2ef44fa9930760794df2286b8804db731d429afef497fcaa0ef02e9fb",
+			"keccak256": "0xdbb5d456a769bf041598351931afa1a77481cfd6f58facc1191dfef5b7faffe4",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://d5578116af15d95fecb12e10af4c49f09c3569fd520c014d0cbc3fbedec2467c",
-				"dweb:/ipfs/QmQkhWN1puAVUMpWrqwMLevm8wTXSyo4cvsG9XRoubFP4b"
+				"bzz-raw://5acaeaa4311724e1fe003c347be76692c18fa08aed74e97c423e0d786b8d96a6",
+				"dweb:/ipfs/QmXAdUDJpxABRPcbmPpscG363zJqq7r2gtREsvkZM2vfxR"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {

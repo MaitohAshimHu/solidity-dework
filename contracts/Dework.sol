@@ -23,6 +23,8 @@ contract Dework{
 
     error Dework_IncorrectJobCreationFee(uint256 fixedPrice,uint256 pricePaid); 
     error Dework_JobClosed(uint256 jobId);
+    error Dework_UnauthorizedEmployer(uint256 employerId,address caller);
+    error Dework_UnauthorizedFreelancer(uint256 freelancerId,address caller);
 
     constructor(address _initialOwner){
         initialOwner = _initialOwner;
@@ -121,20 +123,33 @@ contract Dework{
      }
 
 
-    function _getJob(uint256 employerId,uint256 jobId)internal view returns(JobListing storage){
-        return employerProfiles[employerId].jobListing[jobId];
+   
+
+
+    function _requireJobIsOpen(JobListing memory job) internal pure {
+        if (job.isOpen != true){
+            revert Dework_JobClosed(job.id);
+        }
     }
 
-
-    function _requireJobIsOpen(uint256 employerId,uint256 jobId) internal view {
-        if (employerProfiles[employerId].jobListing[jobId].isOpen != true){
-            revert Dework_JobClosed(jobId);
-        }
+     function _getJob(uint256 employerId,uint256 jobId)internal view returns(JobListing storage){
+        return employerProfiles[employerId].jobListing[jobId];
     }
 
     
     function hireFreelancer(uint256 employerId,uint256 freelancerId,uint256 jobId) public {
+         address employer = employerIdToAddress[employerId];
+
+            if (employer!=msg.sender || employer==address(0)){
+                revert Dework_UnauthorizedEmployer(employerId,msg.sender);
+            }
+
+            if(freelancerId>=getNumberOfRegisteredFreelancers() || freelancerIdToAddress[freelancerId] ==address(0)){
+                revert Dework_UnauthorizedFreelancer(freelancerId,msg.sender);
+            }
+
           JobListing storage job = _getJob(employerId,jobId);
+          _requireJobIsOpen(job);
           job.hiredFreelancerId = freelancerId;
           job.hasHiredFreelancer = true;
           job.isOpen = false;
