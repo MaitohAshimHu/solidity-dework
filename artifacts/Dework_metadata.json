@@ -712,9 +712,9 @@
 						"type": "uint8"
 					},
 					{
-						"internalType": "uint8",
+						"internalType": "uint256",
 						"name": "hourlyRateWei",
-						"type": "uint8"
+						"type": "uint256"
 					}
 				],
 				"name": "registerFreelancerProfile",
@@ -793,11 +793,11 @@
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0xea4b4e3a4b5bc1e7dd76e3070a14650748a9ce45be5ad66cb6b6791d66260cce",
+			"keccak256": "0xa27fa6792ef00ce66c93452d846eec411ec18d610ac5627167c396559ed81dc5",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://981a41f84a7eac6631936f248930c058aa517959994bc52b88a81996b3491734",
-				"dweb:/ipfs/QmUtE6QwQiMNpMu2wjFRaxAM2GDhnEbs3yVvJdfFQYqDo6"
+				"bzz-raw://e18cf1b74068bd775e38e3f9c25adde99ad9d28ac348b8d56e41ce31a44b3e14",
+				"dweb:/ipfs/Qmdh79d2xinoBJQuSCw536kefE9phneghMtrMMNsz2nYiS"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {

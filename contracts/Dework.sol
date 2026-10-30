@@ -87,7 +87,7 @@ contract Dework{
     function registerFreelancerProfile(
         string calldata name,
         uint8 experienceYears,
-        uint8 hourlyRateWei
+        uint256 hourlyRateWei
     ) external {
          uint256 freelancerId = getNumberOfRegisteredFreelancers();
 
@@ -158,7 +158,7 @@ contract Dework{
             isPaid:false
         });
 
-        employerBalance[employerId] = jobListingInput.fixedPriceInWei;
+        employerBalance[employerId] += jobListingInput.fixedPriceInWei;
         employerProfile.jobListing.push(newJob);
 
     }    
@@ -253,6 +253,7 @@ contract Dework{
         }
         employerBalance[employerId] -= withdrawalAmount;
         (bool success,) = employerIdToAddress[employerId].call{value:withdrawalAmount}("");
+        //TODO:CHANGE IT WITH REVERSE
         require(success==false,"Transfer failed to employer");
     }
 
