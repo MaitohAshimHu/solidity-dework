@@ -87,6 +87,11 @@
 				"type": "error"
 			},
 			{
+				"inputs": [],
+				"name": "Dework_NotAuthorizedOwner",
+				"type": "error"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -100,6 +105,22 @@
 					}
 				],
 				"name": "Dework_NotEnoughBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "freelancer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountToSend",
+						"type": "uint256"
+					}
+				],
+				"name": "Dework_PaymentToFreelancerFailed",
 				"type": "error"
 			},
 			{
@@ -640,8 +661,21 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "modifyOwner",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "initialOwner",
+				"name": "owner",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -710,6 +744,24 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "withdrawalAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawAmount",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -741,11 +793,11 @@
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0x29ad66df3601d840f5e186d9c16c3d609e0ff1c16fb1debb46964c2e430bd870",
+			"keccak256": "0xea4b4e3a4b5bc1e7dd76e3070a14650748a9ce45be5ad66cb6b6791d66260cce",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://b16377654c7d6a806c18dd74ac068dad9e2a78d5f94e13d2c00f93936f4988d7",
-				"dweb:/ipfs/QmZgtQSpsuTXdii2UD6c12a8bVsptpjje4imTEfD6mq4gs"
+				"bzz-raw://981a41f84a7eac6631936f248930c058aa517959994bc52b88a81996b3491734",
+				"dweb:/ipfs/QmUtE6QwQiMNpMu2wjFRaxAM2GDhnEbs3yVvJdfFQYqDo6"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {

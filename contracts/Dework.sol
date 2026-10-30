@@ -10,7 +10,7 @@ contract Dework{
     uint256 constant public LATE_PENALITY_BPS_PER_DAY = 500;   //500/10000 = 5%
     uint256 constant public BPS_DENOMINATOR = 10000;    // 100%
     uint256 connectFee;   //state variable  by default = 0
-    address public initialOwner; //default 0x000000.....0   
+    address public owner; //default 0x000000.....0   
     //solidity has no concept of null / none
 
     
@@ -32,9 +32,11 @@ contract Dework{
     error Dework_NotEnoughBalance(uint256 employerId,uint256 employerBalance);
     error Dework_FreelancerIdMismatch(uint256 expectedFreelancerId,uint256 actualFreelancerId);
     error Dework_JobIsAlreadyPaid(uint256 jobId);
+    error Dework_PaymentToFreelancerFailed(address freelancer,uint256 amountToSend);
+    error Dework_NotAuthorizedOwner();
 
     constructor(address _initialOwner){
-        initialOwner = _initialOwner;
+        owner = _initialOwner;
     }
 
     modifier onlyAuthorizedEmployer(uint256 employerId) {
@@ -57,6 +59,13 @@ contract Dework{
                 revert Dework_InvalidJobId(employerId,jobId);
             }
             _;
+    }
+
+    modifier onlyAuthorizedOwner(address _newOwner) {
+        if (owner != msg.sender){
+           revert Dework_NotAuthorizedOwner();
+        }
+        _;
     }
 
     function getFreelancerProfile() public view returns(FreelancerProfile[] memory){
@@ -181,6 +190,13 @@ contract Dework{
           job.isOpen = false;
     }
 
+    function _sendPaymentToFreelancer(address freelancer,uint256 amountToSend) internal {
+        (bool success,) = freelancer.call{value:amountToSend}("");
+        if (success==false){
+        revert Dework_PaymentToFreelancerFailed(freelancer,amountToSend);
+    }
+    }
+
     function _calculatePayment(uint256 amountToSend,uint256 jobDeadlineTimestamp) internal view returns(uint256){
         if(block.timestamp<=jobDeadlineTimestamp){
             return amountToSend;
@@ -223,7 +239,21 @@ contract Dework{
         job.isPaid = true;
         employerBalance[employerId] -= amountToSend;
         uint256 paymentAmount = _calculatePayment(amountToSend,job.deadlineTimestamp);
+        _sendPaymentToFreelancer(freelancerIdToAddress[freelancerId],paymentAmount);
 
+    }
+
+    function modifyOwner(address newOwner) external onlyAuthorizedOwner(owner){
+        owner = newOwner;
+    }
+
+    function withdrawAmount(uint256 employerId,uint256 withdrawalAmount) external onlyAuthorizedEmployer(employerId){
+        if(employerBalance[employerId]<withdrawalAmount){
+            revert Dework_NotEnoughBalance(employerId,employerBalance[employerId]);
+        }
+        employerBalance[employerId] -= withdrawalAmount;
+        (bool success,) = employerIdToAddress[employerId].call{value:withdrawalAmount}("");
+        require(success==false,"Transfer failed to employer");
     }
 
 
