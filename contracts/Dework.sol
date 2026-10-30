@@ -7,6 +7,8 @@ import{CreateJobListingInput} from "./types/DeworkTypes.sol";
 import{JobListing} from "./types/DeworkTypes.sol";
 
 contract Dework{
+    uint256 constant public LATE_PENALITY_BPS_PER_DAY = 500;   //500/10000 = 5%
+    uint256 constant public BPS_DENOMINATOR = 10000;    // 100%
     uint256 connectFee;   //state variable  by default = 0
     address public initialOwner; //default 0x000000.....0   
     //solidity has no concept of null / none
@@ -17,6 +19,7 @@ contract Dework{
 
     mapping(uint256=>address) public freelancerIdToAddress;
     mapping(uint256=>address) public employerIdToAddress;
+    mapping(uint256=>uint256) public employerBalance;
 
     event FreelancerProfileRegistered(uint256 freelancerId,address caller);
     event EmployerProfileRegistered(uint256 employerId,address caller);   
@@ -26,6 +29,9 @@ contract Dework{
     error Dework_UnauthorizedEmployer(uint256 employerId,address caller);
     error Dework_UnauthorizedFreelancer(uint256 freelancerId,address caller);
     error Dework_InvalidJobId(uint256 employerId,uint256 jobId);
+    error Dework_NotEnoughBalance(uint256 employerId,uint256 employerBalance);
+    error Dework_FreelancerIdMismatch(uint256 expectedFreelancerId,uint256 actualFreelancerId);
+    error Dework_JobIsAlreadyPaid(uint256 jobId);
 
     constructor(address _initialOwner){
         initialOwner = _initialOwner;
@@ -143,6 +149,7 @@ contract Dework{
             isPaid:false
         });
 
+        employerBalance[employerId] = jobListingInput.fixedPriceInWei;
         employerProfile.jobListing.push(newJob);
 
     }    
@@ -174,12 +181,48 @@ contract Dework{
           job.isOpen = false;
     }
 
+    function _calculatePayment(uint256 amountToSend,uint256 jobDeadlineTimestamp) internal view returns(uint256){
+        if(block.timestamp<=jobDeadlineTimestamp){
+            return amountToSend;
+        }
+        uint256 delayInCompletion = block.timestamp - jobDeadlineTimestamp;
+        //Ceil division: rounds up to the next full day instead of truncating
+        uint256 delayInDays = (delayInCompletion +1 days - 1)/1 days;
+        uint256 deductionBps = delayInDays*LATE_PENALITY_BPS_PER_DAY;     //BPS - BASES POINTS
+
+        if(deductionBps>BPS_DENOMINATOR){
+            deductionBps = BPS_DENOMINATOR;
+        }
+        uint256 deductionAmount = (amountToSend*deductionBps)/BPS_DENOMINATOR;
+
+        return amountToSend - deductionAmount;
+
+    }
+
     function releaseEscrowPayment(uint256 employerId,uint256 jobId,uint256 freelancerId)
     public 
     onlyAuthorizedEmployer(employerId) 
     validateFreelancerId(freelancerId)
     validateJobId(employerId,jobId)
     {
+        JobListing storage job = _getJob(employerId,jobId);
+        uint256 amountToSend = job.fixedPriceInWei;
+
+        if(employerBalance[employerId]<amountToSend){
+            revert Dework_NotEnoughBalance(employerId,employerBalance[employerId]);
+        }
+
+        if(freelancerId != job.hiredFreelancerId){
+            revert Dework_FreelancerIdMismatch(job.hiredFreelancerId,freelancerId);
+        }
+
+        if(job.isPaid == true){
+            revert Dework_JobIsAlreadyPaid(job.id);
+        }
+
+        job.isPaid = true;
+        employerBalance[employerId] -= amountToSend;
+        uint256 paymentAmount = _calculatePayment(amountToSend,job.deadlineTimestamp);
 
     }
 

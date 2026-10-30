@@ -20,6 +20,22 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "expectedFreelancerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "actualFreelancerId",
+						"type": "uint256"
+					}
+				],
+				"name": "Dework_FreelancerIdMismatch",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "fixedPrice",
 						"type": "uint256"
 					},
@@ -57,6 +73,33 @@
 					}
 				],
 				"name": "Dework_JobClosed",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobId",
+						"type": "uint256"
+					}
+				],
+				"name": "Dework_JobIsAlreadyPaid",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "employerBalance",
+						"type": "uint256"
+					}
+				],
+				"name": "Dework_NotEnoughBalance",
 				"type": "error"
 			},
 			{
@@ -130,6 +173,32 @@
 				"type": "event"
 			},
 			{
+				"inputs": [],
+				"name": "BPS_DENOMINATOR",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "LATE_PENALITY_BPS_PER_DAY",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -167,6 +236,25 @@
 				"name": "createJobListing",
 				"outputs": [],
 				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "employerBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -653,11 +741,11 @@
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0x3610d3754769889a5acb5f8c02f3a4dc126e6e6cdf1595496ddfb0f12bae86d3",
+			"keccak256": "0x29ad66df3601d840f5e186d9c16c3d609e0ff1c16fb1debb46964c2e430bd870",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://1bc7c26becd8e69781004e9122c3c4896414fb5a396f3eee264f228823928972",
-				"dweb:/ipfs/QmWmWGA71ksRA4vX2rtB7kHPN9jQf4URdCHCafQnF5VBx1"
+				"bzz-raw://b16377654c7d6a806c18dd74ac068dad9e2a78d5f94e13d2c00f93936f4988d7",
+				"dweb:/ipfs/QmZgtQSpsuTXdii2UD6c12a8bVsptpjje4imTEfD6mq4gs"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {
