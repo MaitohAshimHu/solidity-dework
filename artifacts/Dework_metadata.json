@@ -36,6 +36,22 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "jobId",
+						"type": "uint256"
+					}
+				],
+				"name": "Dework_InvalidJobId",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "jobId",
 						"type": "uint256"
 					}
@@ -409,6 +425,72 @@
 						"type": "uint256"
 					}
 				],
+				"name": "getJobList",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "title",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "deadlineTimestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "isOpen",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fixedPriceInWei",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "hiredFreelancerId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "hasHiredFreelancer",
+								"type": "bool"
+							},
+							{
+								"internalType": "bool",
+								"name": "isPaid",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct JobListing[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					}
+				],
 				"name": "getNumberOfCreatedJobList",
 				"outputs": [
 					{
@@ -548,11 +630,11 @@
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0xdbb5d456a769bf041598351931afa1a77481cfd6f58facc1191dfef5b7faffe4",
+			"keccak256": "0x362dab638c4df801f60dc1a14b3b772bea6e30066ef3d1234b46b646ad44ec58",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://5acaeaa4311724e1fe003c347be76692c18fa08aed74e97c423e0d786b8d96a6",
-				"dweb:/ipfs/QmXAdUDJpxABRPcbmPpscG363zJqq7r2gtREsvkZM2vfxR"
+				"bzz-raw://71bc03d6febbd70cb8df3a95948b24acaf20d5f2a7245e7b8030925f338542e1",
+				"dweb:/ipfs/QmYuiNjqK8Mcm8LTr6bR7VtKR3hiXSXC93heXeedae6Gft"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {
