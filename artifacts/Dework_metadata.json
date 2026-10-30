@@ -599,6 +599,29 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "employerId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "jobId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "freelancerId",
+						"type": "uint256"
+					}
+				],
+				"name": "releaseEscrowPayment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -630,11 +653,11 @@
 	},
 	"sources": {
 		"contracts/Dework.sol": {
-			"keccak256": "0x362dab638c4df801f60dc1a14b3b772bea6e30066ef3d1234b46b646ad44ec58",
+			"keccak256": "0x3610d3754769889a5acb5f8c02f3a4dc126e6e6cdf1595496ddfb0f12bae86d3",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://71bc03d6febbd70cb8df3a95948b24acaf20d5f2a7245e7b8030925f338542e1",
-				"dweb:/ipfs/QmYuiNjqK8Mcm8LTr6bR7VtKR3hiXSXC93heXeedae6Gft"
+				"bzz-raw://1bc7c26becd8e69781004e9122c3c4896414fb5a396f3eee264f228823928972",
+				"dweb:/ipfs/QmWmWGA71ksRA4vX2rtB7kHPN9jQf4URdCHCafQnF5VBx1"
 			]
 		},
 		"contracts/types/DeworkTypes.sol": {

@@ -39,6 +39,20 @@ contract Dework{
             _;
             }
 
+    modifier validateFreelancerId(uint256 freelancerId) {
+        if (freelancerId>=getNumberOfRegisteredFreelancers() || freelancerIdToAddress[freelancerId] ==address(0)){
+                revert Dework_UnauthorizedFreelancer(freelancerId,msg.sender);
+            }
+            _;
+    }
+
+    modifier validateJobId(uint256 employerId,uint256 jobId){
+        if (jobId>=getNumberOfCreatedJobList(employerId)){
+                revert Dework_InvalidJobId(employerId,jobId);
+            }
+            _;
+    }
+
     function getFreelancerProfile() public view returns(FreelancerProfile[] memory){
                return freelancerProfiles;
      }
@@ -149,20 +163,24 @@ contract Dework{
 
     function hireFreelancer(uint256 employerId,uint256 freelancerId,uint256 jobId) 
     public 
-    onlyAuthorizedEmployer(employerId)
+    onlyAuthorizedEmployer(employerId) 
+    validateFreelancerId(freelancerId)
+    validateJobId(employerId,jobId)
      {
-            if (freelancerId>=getNumberOfRegisteredFreelancers() || freelancerIdToAddress[freelancerId] ==address(0)){
-                revert Dework_UnauthorizedFreelancer(freelancerId,msg.sender);
-            }
-            if (jobId>=getNumberOfCreatedJobList(employerId)){
-                revert Dework_InvalidJobId(employerId,jobId);
-            }
-
           JobListing storage job = _getJob(employerId,jobId);
           _requireJobIsOpen(job);
           job.hiredFreelancerId = freelancerId;
           job.hasHiredFreelancer = true;
           job.isOpen = false;
+    }
+
+    function releaseEscrowPayment(uint256 employerId,uint256 jobId,uint256 freelancerId)
+    public 
+    onlyAuthorizedEmployer(employerId) 
+    validateFreelancerId(freelancerId)
+    validateJobId(employerId,jobId)
+    {
+
     }
 
 
