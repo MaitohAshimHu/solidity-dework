@@ -7,20 +7,20 @@ struct FreelancerProfile {
     address wallet;
     uint8 experienceYears;
     bool isAvailableHire;
-    uint256 hourlyRateWei; // 1 ether = 10^18 wei
+    uint256 hourlyRateWei;
 }
 
 struct EmployerProfile {
     uint256 id;
     string name;
-    bool isHiring;
     address wallet;
+    bool isHiring;
     JobListing[] jobListing;
 }
 
 struct CreateJobListingInput {
     string title;
-    string jobDescription;
+    string description;
     uint256 deadlineTimestamp;
     uint256 fixedPriceInWei;
 }
@@ -36,3 +36,4 @@ struct JobListing {
     bool hasHiredFreelancer;
     bool isPaid;
 }
+

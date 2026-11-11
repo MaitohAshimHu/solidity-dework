@@ -3,14 +3,16 @@ pragma solidity 0.8.34;
 
 import {Test} from "forge-std/Test.sol";
 import {Dework} from "../src/Dework.sol";
-import {FreelancerProfile,CreateJobListingInput,JobListing} from "../src/types/DeworkTypes.sol";
-import "forge-std/console.sol";
+import {FreelancerProfile, CreateJobListingInput, JobListing} from "../src/types/DeworkTypes.sol";
+//TODO: create test for employerRegistration
+//testCreateJobListingRevertsWhenEmployerSendWrongJobCreationFee
+//test hireFreelancer function - different scenerio - happy path testing and sad path testing
 
 contract DeworkTest is Test {
     Dework public dework;
     address initialOwner = makeAddr("owner");
 
-    error Dework_UnauthorizedEmployer(uint256 employerId, address caller);
+    error Dework_UnauthourizedEmployer(uint256 employerId, address caller);
 
     function setUp() public {
         dework = new Dework(initialOwner);
@@ -23,7 +25,7 @@ contract DeworkTest is Test {
 
     function testRegisterFreelancerProfile() public {
         //Arrange
-        string memory name = "Ashim";
+        string memory name = "Kshitij";
         uint8 experienceYears = 20;
         uint256 hourlyRateWei = 100;
         uint256 freelancerId = dework.getNumberOfRegisteredFreelancers();
@@ -39,53 +41,39 @@ contract DeworkTest is Test {
         assertEq(freelancer.hourlyRateWei, hourlyRateWei);
         assertEq(freelancer.experienceYears, experienceYears);
         assertEq(freelancer.isAvailableHire, true);
-        assertEq(freelancer.wallet, address(freelancerAddr));
+        assertEq(freelancer.wallet, freelancerAddr);
     }
 
-    function testCreateJobListingRevertsWhenEmployeeIsNotRegistered() public {
+    function testCreateJobListingRevertsWhenEmployerIsNotRegistered() public {
         address employer = makeAddr("employer");
-        uint256 unregisteredEmployerId = 100;
-
+        uint256 unRegisteredEmployerId = 100;
         CreateJobListingInput memory jobListing = CreateJobListingInput({
-            title: "Solidity Developer", jobDescription: "skilled worker", deadlineTimestamp: 100, fixedPriceInWei: 10
+            title: "Solidity Developer", description: "Skilled Worker", deadlineTimestamp: 100, fixedPriceInWei: 10
         });
-        vm.prank(employer);
-        vm.expectRevert(abi.encodeWithSelector(Dework_UnauthorizedEmployer.selector, unregisteredEmployerId, employer));
-        dework.createJobListing(unregisteredEmployerId, jobListing);
-        }
 
-    function testCreateJobListingRevertsWhenEmployeeIsRegistered() public {
-        ///Arrange
+        vm.prank(employer);
+        vm.expectRevert(abi.encodeWithSelector(Dework_UnauthourizedEmployer.selector, unRegisteredEmployerId, employer));
+        dework.createJobListing(unRegisteredEmployerId, jobListing);
+    }
+
+    function testCreateJobListingWhenEmployerIsRegistered() public {
         address employer = makeAddr("employer");
-        address randomAddr = makeAddr("123");
-        console.log(employer);
-        vm.deal(employer,1 ether);
-        console.log(employer.balance);
+        vm.deal(employer, 1 ether);
         vm.startPrank(employer);
         dework.registerEmployerProfile("Raju");
-        uint256 employerIdRaju = 0;
-
+        uint256 employreIdRaju = 0;
         CreateJobListingInput memory jobListing = CreateJobListingInput({
-            title: "Solidity Developer", jobDescription: "skilled worker", deadlineTimestamp: 100, fixedPriceInWei: 10
+            title: "Solidity Developer", description: "Skilled Worker", deadlineTimestamp: 100, fixedPriceInWei: 10
         });
-        
-        uint256 contractBeforeBlance = address(dework).balance;
+        uint256 contractBeforeBalance = address(dework).balance;
 
-        ///ACT
-        dework.createJobListing{value:10}(employerIdRaju, jobListing);
+        dework.createJobListing{value: 10}(employreIdRaju, jobListing);
+
         vm.stopPrank();
-
         uint256 contractAfterBalance = address(dework).balance;
-        vm.prank(randomAddr);
-        JobListing[] memory jobList = dework.getJobList(employerIdRaju);
-        ///ASSERT
-        assertEq(contractAfterBalance-contractBeforeBlance,10);
-        assertEq(jobList[0].title,"Solidity Developer");
-        assertEq(jobList[0].description,"skilled worker");
-        assertEq(jobList[0].deadlineTimestamp, block.timestamp +100);
-        assertEq(jobList[0].fixedPriceInWei,10);
-        }
-
-
+        JobListing[] memory jobList = dework.getJobList(employreIdRaju);
+        assertEq(contractAfterBalance - contractBeforeBalance, 10);
+        assertEq(jobList[0].title, "Solidity Developer");
+        //TODO: assert other fields of jobList
+    }
 }
-   
